@@ -1,3 +1,4 @@
+
 '''
 Test file for album repository
 '''
@@ -64,3 +65,17 @@ def test_add_multiple_albums_to_database(db_connection):
     assert added_album_1[0] == album_1
     assert added_album_2[0] == album_2
 
+def test_delete_album_in_database(db_connection):
+    '''
+    When an album is deleted from the library
+    It is deleted from the database
+    '''
+    db_connection.seed('seeds/music_library.sql')
+    repo = AlbumRepository(db_connection)
+    album = Album(13, 'OK Computer', 1997, 5)
+    repo.create(album)
+    found_album_1 = repo.find(13)
+    assert found_album_1[0] == album
+    repo.delete(13)
+    found_album_2 = repo.find(13)
+    assert found_album_2 == []
