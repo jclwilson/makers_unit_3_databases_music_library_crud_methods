@@ -12,7 +12,7 @@ class AlbumRepository:
         return [Album(row["id"], row["title"], row["release_year"], row["artist_id"]) for row in rows]
 
     def find(self, id):
-        rows = self._connection.execute(f"SELECT * FROM albums WHERE id = {id};")
+        rows = self._connection.execute("SELECT * FROM albums WHERE id = %s;", [id])
         return [Album(row["id"], row["title"], row["release_year"], row["artist_id"]) for row in rows]
 
     def create(self, album):
