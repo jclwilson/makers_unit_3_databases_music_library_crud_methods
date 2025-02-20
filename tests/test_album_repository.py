@@ -34,3 +34,17 @@ def test_find_single_album_by_id(db_connection):
     repo = AlbumRepository(db_connection)
     result = repo.find(1)
     assert result == [Album(1, 'Doolittle', 1989, 1)]
+
+
+def test_add_one_album_to_database(db_connection):
+    '''
+    When I add an album to the library
+    It is added to the database.
+    '''
+    db_connection.seed('seeds/music_library.sql')
+    repo = AlbumRepository(db_connection)
+    album = Album(13, 'OK Computer', 1997, 5)
+    repo.create(album)
+    added_album = repo.find(13)
+    assert added_album[0] == album
+
