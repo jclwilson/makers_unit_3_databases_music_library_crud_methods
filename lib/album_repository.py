@@ -22,3 +22,10 @@ class AlbumRepository:
         self._connection.execute("INSERT INTO albums (id, title, release_year, artist_id) VALUES (%s, %s, %s, %s)", [album.id, album.title, album.release_year, album.artist_id])
         return None
 
+    def delete(self, id):
+        '''
+        Method to delete a row from the albums table, reflecting the given ID.
+        '''
+        self._connection.execute('DELETE FROM albums WHERE id = %s', [id])
+        return None
+
