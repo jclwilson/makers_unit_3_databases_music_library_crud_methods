@@ -48,3 +48,19 @@ def test_add_one_album_to_database(db_connection):
     added_album = repo.find(13)
     assert added_album[0] == album
 
+def test_add_multiple_albums_to_database(db_connection):
+    '''
+    When I add multiple albums to the library
+    They are added to the database
+    '''
+    db_connection.seed('seeds/music_library.sql')
+    repo = AlbumRepository(db_connection)
+    album_1 = Album(13, 'OK Computer', 1997, 5)
+    album_2 = Album(14, 'National Anthem', 2000, 5)
+    repo.create(album_1)
+    repo.create(album_2)
+    added_album_1 = repo.find(13)
+    added_album_2 = repo.find(14)
+    assert added_album_1[0] == album_1
+    assert added_album_2[0] == album_2
+
